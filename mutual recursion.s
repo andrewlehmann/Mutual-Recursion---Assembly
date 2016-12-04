@@ -48,12 +48,6 @@ syscall
 rec_fib:
 
 	#Here we will be pushing every saved register we USE (and in the process change) in the function into the stack.
-	#You can push every saved register into the stack, but if we don't change their values, there's no need.  
-	#Once control enters the function it will store the value of all the registers, so when we return control
-	#to wherever the function was called from, the values that the registers had right before the function call
-	#was made would be loaded.
-
-# enter code below dashed line:
 	#--------------------------------------------------#
 	#Need to push 3 registers into the stack ($ra, a register to save the return value of first Lucas call, and $a0)
 	addi $sp, $sp, -16	# Allocate space for 3 registers
@@ -66,12 +60,6 @@ beq $a0, 0, fibretzero
 beq $a0, 1, fibretone
 beq $a0, 2, fibretone
 
-
-#Reminder:  Argument values remain changed after the function call.  Make sure you take this into account, or reload their
-#values from the stack.  Also, move the returns of the function call to the specific register you set space in the stack
-#for.  To solve the expressions, you can use the registers that have the return values of the function calls.
-
-# enter code below dashed line:
 	#----------------------------------#
 	
 	#Change argument and call lucas function, move return value to saved register (same one pushed into stack)
@@ -80,7 +68,7 @@ beq $a0, 2, fibretone
 	jal rec_lucas
 	move $s0, $v0
 
-	#Change argument and call lucas function again. (Remember, $a0 value has changed and needs to be reloaded)
+	#Change argument and call lucas function again.
 	move $a0, $s5
 	#lw $a0, 8($sp)
 	addi $a0, $a0, 1	#calculate a + 1
@@ -104,7 +92,7 @@ li $v0, 1
 j fibreturn
 
 fibreturn:
-# enter code below dashed line:
+
 	#----------------------------#
 	#pop all registers from the stack (stack should be empty before the jr $ra instruction)
 	lw $ra, 0($sp)		# save $ra
@@ -121,12 +109,7 @@ jr $ra
 rec_lucas:
 
 	#Here we will be pushing every saved register we USE (and in the process change) in the function into the stack.
-	#You can push every saved register into the stack, but if we don't change their values, there's no need.  
-	#Once control enters the function it will store the value of all the registers, so when we return control
-	#to wherever the function was called from, the values that the registers had right before the function call
-	#was made would be loaded.
 
-# enter code below dashed line:
 	#-------------------------------------#
 	#pushing 7 register's values into stack
 	#$ra, registers to save returns of first, second and third function calls, $a0, register for m and register for n)(total 7)
@@ -147,11 +130,6 @@ beq $a0, 0, lucasrettwo
 beq $a0, 1, lucasretone
 beq $a0, 2, lucasretthree
 
-#Reminder:  Argument values remain changed after the function call.  Make sure you take this into account, or reload their
-#values from the stack.  Also, move the returns of the function call to the specific register you set space in the stack
-#for.  To solve the expressions, you can use the registers that have the return values of the function calls.
-
-# enter code below dashed line:
 	#------------------------------------------#
 	#split argument value into m and n
 	li $a1, 2
@@ -211,7 +189,7 @@ li $v0, 3
 j lucasreturn
 
 lucasreturn:
-# enter code below dashed line:
+
 	#--------------------------------#
 	#pop all registers from stack (it has to be empty before the jr $ra instruction)
 	lw $ra, 0($sp)		#return address
