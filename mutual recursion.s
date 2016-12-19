@@ -1,15 +1,22 @@
 .data
+
 # Andrew Lehmann
 # Pls don't steal
+
 eol: .asciiz "\n"
 input: .asciiz ">>>"
+
 .align 2
 num: .word 0
 fib: .word 0
 luc: .word 0
+
 .text
+
 .globl main
+
 main:
+
 la $a0, input
 jal display_str
 
@@ -56,6 +63,7 @@ rec_fib:
 	sw $a0, 8($sp)		# save a0, which is n
 	sw $s5, 12($sp)		# TESTING
 	#--------------------------------------------------#
+	
 beq $a0, 0, fibretzero
 beq $a0, 1, fibretone
 beq $a0, 2, fibretone
@@ -85,6 +93,7 @@ beq $a0, 2, fibretone
 	#------------------------------------------#
 	
 fibretzero:
+
 li $v0, 0
 j fibreturn
 fibretone:
@@ -137,13 +146,17 @@ beq $a0, 2, lucasretthree
 	mflo $a1
 	mfhi $a3
 	bne $a3, $zero, notZero	#if remainder is NOT zero, jump
+	
 	move $t3, $a1		#save m
 	move $t4, $a1		#save n
 	j afterSettingMN
+	
 	notZero:
+	
 	addi $a2, $a1, 1	# a2 = a1 + 1 (n)
 	move $t3, $a1		# save m in t3
 	move $t4, $a2		# save n in t4
+	
 	afterSettingMN:
 	#Load argument and call Lucas function recursively, save return value to register we saved in stack for it.
 	
@@ -181,9 +194,11 @@ beq $a0, 2, lucasretthree
 lucasrettwo:
 li $v0, 2
 j lucasreturn
+
 lucasretone:
 li $v0, 1
 j lucasreturn
+
 lucasretthree:
 li $v0, 3
 j lucasreturn
