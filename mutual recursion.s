@@ -93,9 +93,9 @@ beq $a0, 2, fibretone
 	#------------------------------------------#
 	
 fibretzero:
-
 li $v0, 0
 j fibreturn
+
 fibretone:
 li $v0, 1
 j fibreturn
